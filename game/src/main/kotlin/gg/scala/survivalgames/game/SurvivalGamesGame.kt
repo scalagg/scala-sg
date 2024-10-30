@@ -71,8 +71,6 @@ class SurvivalGamesGame : ExtendedScalaPlugin()
 
         SurvivalGamesEngine.INSTANCE = engine
 
-        server.getWorld(engine.gameArena!!.getId()).difficulty = Difficulty.EASY
-
         CloudSyncDiscoveryService
             .discoverable.assets
             .add("gg.scala.survivalgames:game:sg-game")

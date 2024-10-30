@@ -23,6 +23,7 @@ import gg.scala.survivalgames.shared.gamemode.SurvivalGamesSoloGameMode
 import me.lucko.helper.utils.Players
 import net.evilblock.cubed.util.CC
 import org.bukkit.Bukkit
+import org.bukkit.Difficulty
 import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
@@ -86,6 +87,8 @@ class SurvivalGamesEngine(
 
             val yaml = YamlConfiguration
                 .loadConfiguration(arenaData)
+
+            Bukkit.getServer().getWorld(CgsGameArenaHandler.arena.getId()).difficulty = Difficulty.EASY
 
             fun mapToLocation(line: String): Location
             {

@@ -131,7 +131,7 @@ class SurvivalGamesEngine(
         override fun deathmatchStartStrategy() = DeathmatchStartStrategy.AlivePlayerCount
         override fun getMinimumToStartDeathMatch() = 4
 
-        override fun getStartTime() = Duration.ofSeconds(45L)
+        override fun getStartTime() = Duration.ofSeconds(10L)
         override fun getTeleportationTime() = Duration.ofSeconds(45L)
 
         override fun onStart()

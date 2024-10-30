@@ -11,8 +11,8 @@ import gg.scala.survivalgames.game.SurvivalGamesConfig
 import gg.scala.survivalgames.game.SurvivalGamesGame
 import gg.scala.survivalgames.game.chest.SurvivalGamesChestService
 import gg.scala.survivalgames.game.sit
-import gg.scala.survivalgames.game.sponsors.SurvivalGamesSponsorService
 import gg.scala.survivalgames.game.sponsors.SurvivalGamesSponsorConfig
+import gg.scala.survivalgames.game.sponsors.SurvivalGamesSponsorService
 import gg.tropic.game.extensions.profile.CorePlayerProfileService
 import me.lucko.helper.Events
 import me.lucko.helper.utils.Players
@@ -301,7 +301,8 @@ object SurvivalGamesListener : Listener
         event: BlockExplodeEvent
     )
     {
-            event.isCancelled = true
+        event.blockList().clear()
+        event.isCancelled = true
     }
 
     @EventHandler

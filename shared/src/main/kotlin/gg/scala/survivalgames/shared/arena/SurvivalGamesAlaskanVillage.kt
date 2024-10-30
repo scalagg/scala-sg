@@ -26,10 +26,6 @@ object SurvivalGamesAlaskanVillage : SurvivalGamesMap
         File("plugins${File.separator}maps${File.separator}alaskan_village")
             .toPath()
 
-    override fun getXMaterialIcon(): XMaterial {
-        TODO("Not yet implemented")
-    }
-
     override fun getBukkitWorldName() = "alaskan_village"
 
     override fun getPreLobbyLocation() = Location(

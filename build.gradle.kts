@@ -1,0 +1,103 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    java
+    `maven-publish`
+    kotlin("jvm") version "1.9.20"
+    kotlin("kapt") version "1.9.20"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("org.ajoberstar.grgit") version "4.1.1"
+}
+
+allprojects {
+    group = "gg.scala.survivalgames"
+    version = "1.0.3"
+
+    repositories {
+        mavenCentral()
+        configureScalaRepository()
+    }
+}
+
+subprojects {
+    apply(plugin = "java")
+    apply(plugin = "org.ajoberstar.grgit")
+    apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = "org.jetbrains.kotlin.kapt")
+    apply(plugin = "com.github.johnrengelman.shadow")
+    apply(plugin = "maven-publish")
+
+    dependencies {
+        compileOnly(kotlin("stdlib"))
+
+        compileOnly("gg.scala.commons:bukkit:3.4.5")
+        compileOnly("gg.scala.store:spigot:0.1.8")
+        compileOnly("gg.scala.spigot:server:1.1.0")
+
+        compileOnly("gg.scala.achievements:scala-achievements-plugin:1.0.4")
+        compileOnly("gg.tropic.game.extensions:tropic-core-game-extensions:1.2.9")
+
+        compileOnly("gg.scala.lemon:bukkit:1.7.0")
+        compileOnly("gg.scala.cloudsync:spigot:1.0.1")
+    }
+
+    kotlin {
+        jvmToolchain(jdkVersion = 17)
+    }
+
+    tasks {
+        withType<ShadowJar> {
+            archiveClassifier.set("")
+            exclude(
+                "**/*.kotlin_metadata",
+                "**/*.kotlin_builtins",
+                "META-INF/"
+            )
+
+            archiveFileName = "SG.jar"
+        }
+
+        withType<KotlinCompile> {
+            kotlinOptions.javaParameters = true
+            kotlinOptions.jvmTarget = "17"
+        }
+
+        withType<JavaCompile> {
+            options.compilerArgs.add("-parameters")
+            options.fork()
+            options.encoding = "UTF-8"
+        }
+    }
+
+    publishing {
+        repositories.configureScalaRepository(
+            dev = version.toString().endsWith("-dev")
+        )
+
+        publications {
+            register(
+                name = "mavenJava",
+                type = MavenPublication::class,
+                configurationAction = shadow::component
+            )
+        }
+    }
+
+    tasks.getByName("build")
+        .dependsOn(
+            "shadowJar",
+            "publishMavenJavaPublicationToScalaRepository"
+        )
+}
+
+fun RepositoryHandler.configureScalaRepository(dev: Boolean = false)
+{
+    maven("${property("artifactory_contextUrl")}/gradle-${if (dev) "dev" else "release"}") {
+        name = "scala"
+        credentials {
+            username = property("artifactory_user").toString()
+            password = property("artifactory_password").toString()
+        }
+    }
+}

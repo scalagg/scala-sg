@@ -37,7 +37,7 @@ object SurvivalGamesScoreboard : CgsGameScoreboardRenderer
         }, 0L, 10L)
     }
 
-    override fun getTitle() = "${CC.B_PRI}Survival Games ${CC.GRAY}(${ServerSync.getLocalGameServer().id})"
+    override fun getTitle() = "${CC.B_PRI}Survival Games"
 
     override fun render(lines: LinkedList<String>, player: Player, state: CgsGameState)
     {
@@ -63,16 +63,18 @@ object SurvivalGamesScoreboard : CgsGameScoreboardRenderer
             lines.add("${CC.GRAY}Mode: ${CC.PRI}${
                 CgsGameEngine.INSTANCE.gameMode.getName()
             }")
-            lines.add("${CC.GRAY}Version: ${CC.PRI}${
-                CgsGameEngine.INSTANCE.gameInfo.gameVersion
+            lines.add("${CC.GRAY}Server: ${CC.PRI}${
+                ServerSync.getLocalGameServer().id
             }")
         } else if (state.isAfter(CgsGameState.STARTED))
         {
             lines.add("${CC.GRAY}Remaining: ${CC.PRI + remaining + "/" + CgsGameEngine.INSTANCE.originalRemaining.size}")
             lines.add("${CC.GRAY}Kills: ${CC.PRI + SurvivalGamesListener.killsTracker[player.uniqueId]}")
             lines.add("")
-            lines.add("${CC.GRAY}Map:")
-            lines.add(CC.PRI + CgsGameEngine.INSTANCE.gameArena!!.getName())
+            lines.add("${CC.GRAY}Server: ${CC.PRI}${
+                ServerSync.getLocalGameServer().id
+            }")
+            lines.add("${CC.GRAY}Map: ${CC.PRI + CgsGameEngine.INSTANCE.gameArena!!.getName()}")
         }
         lines.add("")
         lines += "${CC.PRI}${LemonConstants.WEB_LINK} $footerPadding"

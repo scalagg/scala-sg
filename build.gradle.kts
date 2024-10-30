@@ -10,9 +10,13 @@ plugins {
     id("org.ajoberstar.grgit") version "4.1.1"
 }
 
+var currentBranch: String = grgit.branch.current().name
+
 allprojects {
     group = "gg.scala.survivalgames"
-    version = "1.0.3"
+    version = "1.0.3${
+        if (currentBranch == "develop") "-dev" else ""
+    }"
 
     repositories {
         mavenCentral()

@@ -59,15 +59,13 @@ class SurvivalGamesEngine(
         override val selectionType = VoteSelectionType.GUI
         override val votingAutoCloseDuration = Duration.ofSeconds(20L)
 
-        override fun entries(): List<VotingMapEntry> {
-            return SurvivalGamesSoloGameMode.getArenas().map { arena ->
-                VotingMapEntry(
-                    arena.getId(),
-                    XMaterial.valueOf(arena.getMaterial().toString()),
-                    arena.getDescription(),
-                    arena.getName()
-                )
-            }.toMutableList().take(5)
+        override fun entries() = SurvivalGamesSoloGameMode.getSGMaps().map {
+            VotingMapEntry(
+                id = it.getId(),
+                item = it.getXMaterialIcon(),
+                description = it.getDescription(),
+                displayName = it.getName()
+            )
         }
 
         override fun preStartLobby() = Location(

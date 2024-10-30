@@ -1,6 +1,8 @@
 package gg.scala.survivalgames.shared.arena
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.cgs.common.information.arena.CgsGameArena
+import gg.scala.survivalgames.shared.SurvivalGamesMap
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
@@ -11,7 +13,7 @@ import java.nio.file.Path
  * @author Topu
  * @date 10/30/2024
  */
-object SurvivalGamesValleyside : CgsGameArena
+object SurvivalGamesValleyside : SurvivalGamesMap
 {
  override fun getId() = "valleyside"
  override fun getName() = "Valleyside"
@@ -22,6 +24,8 @@ object SurvivalGamesValleyside : CgsGameArena
  override fun getDirectory(): Path? =
   File("plugins${File.separator}maps${File.separator}valleyside")
    .toPath()
+
+ override fun getXMaterialIcon() = XMaterial.GRASS_BLOCK
 
  override fun getBukkitWorldName() = "valleyside"
 

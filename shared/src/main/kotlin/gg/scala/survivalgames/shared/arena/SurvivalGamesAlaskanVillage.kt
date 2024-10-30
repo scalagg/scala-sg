@@ -1,6 +1,8 @@
 package gg.scala.survivalgames.shared.arena
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.cgs.common.information.arena.CgsGameArena
+import gg.scala.survivalgames.shared.SurvivalGamesMap
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
@@ -11,17 +13,22 @@ import java.nio.file.Path
  * @author GrowlyX
  * @since 12/3/2021
  */
-object SurvivalGamesAlaskanVillage : CgsGameArena
+object SurvivalGamesAlaskanVillage : SurvivalGamesMap
 {
     override fun getId() = "alaskan_village"
     override fun getName() = "Alaskan Village"
 
     override fun getMaterial() = Pair(Material.SNOW_BALL, 0)
+    override fun getXMaterialIcon() = XMaterial.SNOWBALL
     override fun getDescription() = "Snowy!"
 
     override fun getDirectory(): Path? =
         File("plugins${File.separator}maps${File.separator}alaskan_village")
             .toPath()
+
+    override fun getXMaterialIcon(): XMaterial {
+        TODO("Not yet implemented")
+    }
 
     override fun getBukkitWorldName() = "alaskan_village"
 

@@ -6,6 +6,7 @@ import gg.scala.cgs.common.player.handler.CgsPlayerHandler
 import gg.scala.cgs.common.player.scoreboard.CgsGameScoreboardRenderer
 import gg.scala.cgs.common.runnable.state.StartingStateRunnable
 import gg.scala.cgs.common.states.CgsGameState
+import gg.scala.commons.agnostic.sync.ServerSync
 import gg.scala.lemon.LemonConstants
 import gg.scala.survivalgames.game.SurvivalGamesEngine
 import gg.scala.survivalgames.game.listener.SurvivalGamesListener
@@ -36,7 +37,7 @@ object SurvivalGamesScoreboard : CgsGameScoreboardRenderer
         }, 0L, 10L)
     }
 
-    override fun getTitle() = "${CC.B_PRI}Survival Games"
+    override fun getTitle() = "${CC.B_PRI}Survival Games ${CC.GRAY}(${ServerSync.getLocalGameServer().id})"
 
     override fun render(lines: LinkedList<String>, player: Player, state: CgsGameState)
     {
@@ -67,11 +68,8 @@ object SurvivalGamesScoreboard : CgsGameScoreboardRenderer
             }")
         } else if (state.isAfter(CgsGameState.STARTED))
         {
-            lines.add("${CC.GRAY}Remaining:")
-            lines.add(CC.PRI + remaining + "/" + CgsGameEngine.INSTANCE.originalRemaining.size)
-            lines.add("")
-            lines.add("${CC.GRAY}Kills:")
-            lines.add(CC.PRI + SurvivalGamesListener.killsTracker[player.uniqueId])
+            lines.add("${CC.GRAY}Remaining: ${CC.PRI + remaining + "/" + CgsGameEngine.INSTANCE.originalRemaining.size}")
+            lines.add("${CC.GRAY}Kills: ${CC.PRI + SurvivalGamesListener.killsTracker[player.uniqueId]}")
             lines.add("")
             lines.add("${CC.GRAY}Map:")
             lines.add(CC.PRI + CgsGameEngine.INSTANCE.gameArena!!.getName())

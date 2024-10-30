@@ -213,7 +213,7 @@ object SurvivalGamesListener : Listener
     @EventHandler
     fun onInventory(event: InventoryClickEvent)
     {
-        if (CgsGameEngine.INSTANCE.gameState == CgsGameState.STARTED
+        if (CgsGameEngine.INSTANCE.gameState != CgsGameState.STARTED
         )
         {
             return

@@ -17,8 +17,7 @@ object SurvivalGamesSoloGameMode : CgsGameMode
     override fun getName() = "Solo"
 
     private val maps by lazy {
-        listOf<SurvivalGamesMap>(SurvivalGamesAlaskanVillage,
-            SurvivalGamesValleyside)
+        listOf(SurvivalGamesAlaskanVillage)
     }
 
     fun getSGMaps() = maps

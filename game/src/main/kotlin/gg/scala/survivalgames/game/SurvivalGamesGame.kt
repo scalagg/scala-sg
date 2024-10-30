@@ -11,6 +11,7 @@ import gg.scala.commons.core.plugin.PluginDependencyComposite
 import gg.scala.survivalgames.game.listener.SurvivalGamesListener
 import gg.scala.survivalgames.game.sponsors.SurvivalGamesSponsorConfig
 import gg.scala.survivalgames.shared.SurvivalGamesCgsInfo
+import org.bukkit.Difficulty
 
 /**
  * @author GrowlyX
@@ -69,6 +70,8 @@ class SurvivalGamesGame : ExtendedScalaPlugin()
         )
 
         SurvivalGamesEngine.INSTANCE = engine
+
+        server.getWorld(engine.gameArena!!.getId()).difficulty = Difficulty.EASY
 
         CloudSyncDiscoveryService
             .discoverable.assets

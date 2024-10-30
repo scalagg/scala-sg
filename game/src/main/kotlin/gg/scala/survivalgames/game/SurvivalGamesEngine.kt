@@ -55,7 +55,7 @@ class SurvivalGamesEngine(
 
     private val votingMapConfiguration = object : VotingMapConfiguration
     {
-        override val minimumPlayersForVotingStart = 2
+        override val minimumPlayersForVotingStart = 4
         override val selectionType = VoteSelectionType.GUI
         override val votingAutoCloseDuration = Duration.ofSeconds(20L)
 
@@ -128,11 +128,20 @@ class SurvivalGamesEngine(
         override fun deathmatchStartStrategy() = DeathmatchStartStrategy.AlivePlayerCount
         override fun getMinimumToStartDeathMatch() = 4
 
-        override fun getStartTime() = Duration.ofSeconds(10L)
-        override fun getTeleportationTime() = Duration.ofSeconds(10L)
+        override fun getStartTime() = Duration.ofSeconds(45L)
+        override fun getTeleportationTime() = Duration.ofSeconds(45L)
 
         override fun onStart()
         {
+            val world = Bukkit.getWorld(gameArena!!.getId()) ?: return
+            val borderSize = 50.0
+            val centerX = SurvivalGamesListener.centerLocation.x
+            val centerZ = SurvivalGamesListener.centerLocation.z
+
+            val worldBorder = world.worldBorder
+            worldBorder.center = Location(world, centerX, 0.0, centerZ)
+            worldBorder.size = borderSize
+
             Players.all()
                 .filter {
                     !it.hasMetadata("spectator")

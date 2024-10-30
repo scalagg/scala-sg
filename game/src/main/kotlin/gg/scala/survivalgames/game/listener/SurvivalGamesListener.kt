@@ -20,15 +20,20 @@ import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Tasks
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import net.minecraft.server.v1_8_R3.EntityTNTPrimed
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Chest
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftTNTPrimed
 import org.bukkit.entity.Player
+import org.bukkit.entity.TNTPrimed
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.block.BlockExplodeEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
@@ -38,6 +43,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerItemHeldEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import java.lang.reflect.Field
 import java.util.*
 
 /**
@@ -107,6 +113,18 @@ object SurvivalGamesListener : Listener
     {
         val config = this.plugin
             .config<SurvivalGamesConfig>()
+
+        if (event.block.type == Material.TNT)
+        {
+            event.blockPlaced.type = Material.AIR
+            val tnt = event.block.location.world.spawn(
+                event.block.location.add(0.5, 0.0, 0.5),
+                TNTPrimed::class.java
+            )
+            tnt.fuseTicks = 40
+            setSource(tnt, event.player)
+            return
+        }
 
         if (!config.placeableBlocks.contains(event.blockPlaced.type.name))
         {
@@ -274,6 +292,14 @@ object SurvivalGamesListener : Listener
     }
 
     @EventHandler
+    fun onBlockExplode(
+        event: BlockExplodeEvent
+    )
+    {
+            event.isCancelled = true
+    }
+
+    @EventHandler
     fun onGameStart(
         event: CgsGameEngine.CgsGameStartEvent
     )
@@ -314,6 +340,21 @@ object SurvivalGamesListener : Listener
             )
 
             this.killsTracker[event.participant.uniqueId] = 0
+        }
+    }
+
+    fun setSource(tnt: TNTPrimed, owner: Player)
+    {
+        val nmsEntityLiving = ((owner as CraftLivingEntity).handle)
+        val nmsTNT = ((tnt as CraftTNTPrimed).handle)
+        try
+        {
+            val sourceField: Field = EntityTNTPrimed::class.java.getDeclaredField("source")
+            sourceField.setAccessible(true)
+            sourceField.set(nmsTNT, nmsEntityLiving)
+        } catch (ex: Exception)
+        {
+            ex.printStackTrace()
         }
     }
 

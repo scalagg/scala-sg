@@ -47,13 +47,12 @@ object SurvivalGamesScoreboard : CgsGameScoreboardRenderer
         {
             if (state == CgsGameState.WAITING)
             {
-                lines.add("${CC.GRAY}Game State: ${CC.WHITE}Waiting")
+                lines.add("${CC.GRAY}State: ${CC.WHITE}Waiting")
             } else
             {
                 lines.add("${CC.GRAY}Starting in ${CC.PRI}${TimeUtil.formatIntoAbbreviatedString(StartingStateRunnable.PRE_START_TIME)}")
             }
 
-            lines.add("")
             lines.add("${CC.GRAY}Players: ${CC.PRI}${
                 Bukkit.getOnlinePlayers().size
             }/${

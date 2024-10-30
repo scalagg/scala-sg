@@ -213,6 +213,11 @@ object SurvivalGamesListener : Listener
     @EventHandler
     fun onInventory(event: InventoryClickEvent)
     {
+        if (CgsGameEngine.INSTANCE.gameState == CgsGameState.STARTED
+        )
+        {
+            return
+        }
         if (event.currentItem.type == Material.COMPASS && compassTracker.containsKey(event.whoClicked.uniqueId))
         {
             event.isCancelled = true

@@ -2,7 +2,7 @@ package gg.scala.survivalgames.game.sponsors.menu
 
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.survivalgames.game.sponsors.*
-import gg.tropic.game.extensions.profile.CorePlayerProfileService
+import gg.scala.game.extensions.profile.CorePlayerProfileService
 import net.evilblock.cubed.menu.Button
 import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC

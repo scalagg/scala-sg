@@ -14,7 +14,7 @@ var currentBranch: String = grgit.branch.current().name
 
 allprojects {
     group = "gg.scala.survivalgames"
-    version = "1.0.3${
+    version = "1.0.4${
         if (currentBranch == "develop") "-dev" else ""
     }"
 
@@ -40,7 +40,7 @@ subprojects {
         compileOnly("gg.scala.spigot:server:1.1.0")
 
         compileOnly("gg.scala.achievements:scala-achievements-plugin:1.0.4")
-        compileOnly("gg.tropic.game.extensions:tropic-core-game-extensions:1.2.9")
+        compileOnly("gg.scala.game.extensions:scala-core-game-extensions:1.3.2")
 
         compileOnly("gg.scala.lemon:bukkit:1.7.0")
         compileOnly("gg.scala.cloudsync:spigot:1.0.1")

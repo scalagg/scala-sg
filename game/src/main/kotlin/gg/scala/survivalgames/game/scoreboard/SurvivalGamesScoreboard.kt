@@ -47,35 +47,35 @@ object SurvivalGamesScoreboard : CgsGameScoreboardRenderer
         {
             if (state == CgsGameState.WAITING)
             {
-                lines.add("${CC.GRAY}State: ${CC.WHITE}Waiting")
+                lines.add("${CC.WHITE}State: ${CC.PRI}Waiting")
             } else
             {
-                lines.add("${CC.GRAY}Starting in ${CC.PRI}${TimeUtil.formatIntoAbbreviatedString(StartingStateRunnable.PRE_START_TIME)}")
+                lines.add("${CC.WHITE}Starting in ${CC.PRI}${TimeUtil.formatIntoAbbreviatedString(StartingStateRunnable.PRE_START_TIME)}")
             }
 
-            lines.add("${CC.GRAY}Players: ${CC.PRI}${
+            lines.add("${CC.WHITE}Players: ${CC.PRI}${
                 Bukkit.getOnlinePlayers().size
             }/${
                 Bukkit.getMaxPlayers()
             }")
             lines.add("")
-            lines.add("${CC.GRAY}Mode: ${CC.PRI}${
+            lines.add("${CC.WHITE}Mode: ${CC.PRI}${
                 CgsGameEngine.INSTANCE.gameMode.getName()
             }")
-            lines.add("${CC.GRAY}Server: ${CC.PRI}${
+            lines.add("${CC.WHITE}Server: ${CC.PRI}${
                 ServerSync.getLocalGameServer().id
             }")
         } else if (state.isAfter(CgsGameState.STARTED))
         {
-            lines.add("${CC.GRAY}Remaining: ${CC.PRI + remaining + "/" + CgsGameEngine.INSTANCE.originalRemaining.size}")
-            lines.add("${CC.GRAY}Kills: ${CC.PRI + SurvivalGamesListener.killsTracker[player.uniqueId]}")
+            lines.add("${CC.WHITE}Remaining: ${CC.PRI + remaining + "/" + CgsGameEngine.INSTANCE.originalRemaining.size}")
+            lines.add("${CC.WHITE}Kills: ${CC.PRI + SurvivalGamesListener.killsTracker[player.uniqueId]}")
             lines.add("")
-            lines.add("${CC.GRAY}Server: ${CC.PRI}${
+            lines.add("${CC.WHITE}Server: ${CC.PRI}${
                 ServerSync.getLocalGameServer().id
             }")
-            lines.add("${CC.GRAY}Map: ${CC.PRI + CgsGameEngine.INSTANCE.gameArena!!.getName()}")
+            lines.add("${CC.WHITE}Map: ${CC.PRI + CgsGameEngine.INSTANCE.gameArena!!.getName()}")
         }
         lines.add("")
-        lines += "${CC.PRI}${LemonConstants.WEB_LINK} $footerPadding"
+        lines += "${CC.GRAY}${LemonConstants.WEB_LINK} $footerPadding"
     }
 }
